@@ -1,0 +1,13 @@
+[package]
+name = "condash"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+webbrowser = "1.0"
+ctrlc = "3.4"
+tempfile = "3.10"
+anyhow = "1.0"
+reqwest = { version = "0.12", features = ["blocking"] }
+colored = "2.1"
