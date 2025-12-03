@@ -2,6 +2,7 @@ use anyhow::{Context, Result};
 use std::path::PathBuf;
 use tempfile::TempDir;
 use std::fs;
+use std::os::unix::fs::PermissionsExt;
 
 /// Create temporary directory and write all config files
 pub fn setup_temp_dir(container_name: &str) -> Result<PathBuf> {
@@ -47,8 +48,34 @@ pub fn setup_temp_dir(container_name: &str) -> Result<PathBuf> {
         dashboard_json
     ).context("Failed to write grafana dashboard JSON")?;
     
+    // Make all directories and files readable by everyone (for Grafana container)
+    set_permissions_recursive(&temp_path)?;
+    
     // Prevent temp_dir from being dropped (which would delete it)
     std::mem::forget(temp_dir);
     
     Ok(temp_path)
+}
+
+/// Recursively set permissions to be readable by all users
+fn set_permissions_recursive(path: &PathBuf) -> Result<()> {
+    // Set directory permissions to 0755 (rwxr-xr-x)
+    if path.is_dir() {
+        let mut perms = fs::metadata(path)?.permissions();
+        perms.set_mode(0o755);
+        fs::set_permissions(path, perms)?;
+        
+        // Recursively process directory contents
+        for entry in fs::read_dir(path)? {
+            let entry = entry?;
+            set_permissions_recursive(&entry.path())?;
+        }
+    } else {
+        // Set file permissions to 0644 (rw-r--r--)
+        let mut perms = fs::metadata(path)?.permissions();
+        perms.set_mode(0o644);
+        fs::set_permissions(path, perms)?;
+    }
+    
+    Ok(())
 }
