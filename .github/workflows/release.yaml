@@ -94,6 +94,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.target }}-target-
       
+      - name: Clean build
+        run: |
+          rm -f Cargo.lock
+          cargo update
+      
       - name: Build
         run: |
           echo "🔨 Building for ${{ matrix.platform }}..."
