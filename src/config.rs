@@ -5,7 +5,7 @@ use std::fs;
 use std::os::unix::fs::PermissionsExt;
 
 /// Create temporary directory and write all config files
-pub fn setup_temp_dir(container_name: &str) -> Result<PathBuf> {
+pub fn setup_temp_dir(_container_name: &str) -> Result<PathBuf> {
     let temp_dir = TempDir::new().context("Failed to create temp directory")?;
     let temp_path = temp_dir.path().to_path_buf();
     
