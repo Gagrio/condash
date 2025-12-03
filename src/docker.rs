@@ -48,7 +48,7 @@ pub fn validate_container(container_name: &str) -> Result<()> {
 
 /// Start the monitoring stack using docker compose
 pub fn compose_up(temp_dir: &Path) -> Result<()> {
-    let compose_file = temp_dir.join("docker-compose.yml");
+    let compose_file = temp_dir.join("docker-compose.yaml");
     
     let output = Command::new("docker")
         .args(["compose", "-f", compose_file.to_str().unwrap(), "up", "-d"])
@@ -64,7 +64,7 @@ pub fn compose_up(temp_dir: &Path) -> Result<()> {
 
 /// Stop and remove the monitoring stack
 pub fn compose_down(temp_dir: &Path) -> Result<()> {
-    let compose_file = temp_dir.join("docker-compose.yml");
+    let compose_file = temp_dir.join("docker-compose.yaml");
     
     let output = Command::new("docker")
         .args(["compose", "-f", compose_file.to_str().unwrap(), "down", "-v"])
