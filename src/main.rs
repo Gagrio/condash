@@ -24,6 +24,10 @@ fn main() -> Result<()> {
     docker::validate_container(&args.container)?;
     println!("   {} Found container: {}", "✓".green(), args.container);
     
+    println!("{}", "🔌 Checking port availability...".bright_blue());
+    docker::check_ports_available()?;
+    println!("   {} Ports 3000, 9090, 8080 are available", "✓".green());
+    
     println!("{}", "🚀 Starting monitoring stack...".bright_blue());
     let temp_dir = config::setup_temp_dir(&args.container)?;
     

@@ -1,6 +1,36 @@
 use anyhow::{Context, Result};
 use std::path::Path;
 use std::process::Command;
+use std::net::TcpListener;
+
+/// Check if required ports are available
+pub fn check_ports_available() -> Result<()> {
+    let ports = vec![3000, 9090, 8080];
+    let mut unavailable = Vec::new();
+    
+    for port in &ports {
+        if !is_port_available(*port) {
+            unavailable.push(*port);
+        }
+    }
+    
+    if !unavailable.is_empty() {
+        anyhow::bail!(
+            "Required ports are already in use: {}. Please stop services using these ports.",
+            unavailable.iter()
+                .map(|p| p.to_string())
+                .collect::<Vec<_>>()
+                .join(", ")
+        );
+    }
+    
+    Ok(())
+}
+
+/// Check if a single port is available
+fn is_port_available(port: u16) -> bool {
+    TcpListener::bind(("127.0.0.1", port)).is_ok()
+}
 
 /// Validate that a Docker container exists and is running
 pub fn validate_container(container_name: &str) -> Result<()> {
