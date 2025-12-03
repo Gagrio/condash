@@ -14,7 +14,7 @@ services:
     command:
       - "--docker_only=true"
       - "--housekeeping_interval=5s"
-      - "--disable_metrics=accelerator,cpu_topology,disk,memory_numa,tcp,udp,percpu,sched,process,hugetlb,referenced_memory,resctrl,cpuset,advtcp"
+      - "--disable_metrics=cpu_topology,memory_numa,tcp,udp,percpu,sched,process,hugetlb,referenced_memory,resctrl,cpuset,advtcp"
     networks:
       - condash
 
