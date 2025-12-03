@@ -8,6 +8,7 @@ on:
     types:
       - completed
     branches: [ master, main ]
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 env:
   CARGO_TERM_COLOR: always
