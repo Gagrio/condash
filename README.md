@@ -37,6 +37,22 @@ Press Ctrl+C to stop monitoring and clean up.
 
 ## 🔧 Installation
 
+### Download pre-built binary (Recommended)
+
+Pre-built binaries are available for Linux platforms:
+
+```bash
+# Linux ARM64 (aarch64) - like openSUSE Leap 16 on ARM
+wget https://github.com/yourusername/condash/releases/latest/download/condash-linux-aarch64
+chmod +x condash-linux-aarch64
+sudo mv condash-linux-aarch64 /usr/local/bin/condash
+
+# Linux x86_64
+wget https://github.com/yourusername/condash/releases/latest/download/condash-linux-x86_64
+chmod +x condash-linux-x86_64
+sudo mv condash-linux-x86_64 /usr/local/bin/condash
+```
+
 ### Build from source
 
 ```bash
