@@ -58,10 +58,20 @@ jobs:
         include:
           - platform: Linux x86_64
             target: x86_64-unknown-linux-gnu
+            runner: ubuntu-latest
             output: condash-linux-x86_64
           - platform: Linux aarch64
             target: aarch64-unknown-linux-gnu
+            runner: ubuntu-latest
             output: condash-linux-aarch64
+          - platform: macOS Intel
+            target: x86_64-apple-darwin
+            runner: macos-13
+            output: condash-macos-x86_64
+          - platform: macOS Apple Silicon
+            target: aarch64-apple-darwin
+            runner: macos-latest
+            output: condash-macos-aarch64
     
     steps:
       - name: Checkout code
@@ -72,7 +82,8 @@ jobs:
         with:
           targets: ${{ matrix.target }}
       
-      - name: Install cross-compilation tool
+      - name: Install cross-compilation tool (Linux only)
+        if: matrix.runner == 'ubuntu-latest'
         run: cargo install cross --git https://github.com/cross-rs/cross
       
       - name: Cache cargo
@@ -94,7 +105,11 @@ jobs:
       - name: Build
         run: |
           echo "🔨 Building for ${{ matrix.platform }}..."
-          cross build --release --target ${{ matrix.target }}
+          if [ "${{ matrix.runner }}" = "ubuntu-latest" ]; then
+            cross build --release --target ${{ matrix.target }}
+          else
+            cargo build --release --target ${{ matrix.target }}
+          fi
       
       - name: Strip binary (Linux only)
         if: contains(matrix.target, 'linux')
@@ -104,6 +119,10 @@ jobs:
           else
             strip target/${{ matrix.target }}/release/condash
           fi
+      
+      - name: Strip binary (macOS only)
+        if: contains(matrix.runner, 'macos')
+        run: strip target/${{ matrix.target }}/release/condash
       
       - name: Prepare artifact
         run: |
@@ -141,6 +160,7 @@ jobs:
           mkdir -p release
           cp binaries/condash-linux-x86_64/condash-linux-x86_64 release/
           cp binaries/condash-linux-aarch64/condash-linux-aarch64 release/
+          cp binaries/condash-macos-aarch64/condash-macos-aarch64 release/
           ls -lh release/
       
       - name: Create Release
@@ -163,6 +183,7 @@ jobs:
             |----------|----------|
             | 🐧 Linux x86_64 | [`condash-linux-x86_64`](https://github.com/${{ github.repository }}/releases/download/${{ needs.check-version.outputs.version }}/condash-linux-x86_64) |
             | 🐧 Linux aarch64 (ARM64) | [`condash-linux-aarch64`](https://github.com/${{ github.repository }}/releases/download/${{ needs.check-version.outputs.version }}/condash-linux-aarch64) |
+            | 🍎 macOS Apple Silicon (M1/M2/M3) | [`condash-macos-aarch64`](https://github.com/${{ github.repository }}/releases/download/${{ needs.check-version.outputs.version }}/condash-macos-aarch64) |
             
             ### 🚀 Quick Install (Linux aarch64)
             
@@ -194,6 +215,7 @@ jobs:
           files: |
             release/condash-linux-x86_64
             release/condash-linux-aarch64
+            release/condash-macos-aarch64
           draft: false
           prerelease: false
         env:

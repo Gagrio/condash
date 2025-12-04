@@ -32,14 +32,20 @@ Press Ctrl+C to stop monitoring and clean up.
 
 - Docker (with `docker compose` command)
 - Rust toolchain (for building from source)
-- Linux (tested on openSUSE Leap 16)
+- Linux or macOS
 - Ports 3000, 8080, 9090 available
 
 ## 🔧 Installation
 
-### Download pre-built binary (Recommended)
+### Homebrew (macOS - Recommended)
 
-Pre-built binaries are available for Linux platforms:
+```bash
+brew install yourusername/condash/condash
+```
+
+### Download pre-built binary
+
+Pre-built binaries are available for Linux and macOS:
 
 ```bash
 # Linux ARM64 (aarch64) - like openSUSE Leap 16 on ARM
@@ -51,6 +57,11 @@ sudo mv condash-linux-aarch64 /usr/local/bin/condash
 wget https://github.com/yourusername/condash/releases/latest/download/condash-linux-x86_64
 chmod +x condash-linux-x86_64
 sudo mv condash-linux-x86_64 /usr/local/bin/condash
+
+# macOS Apple Silicon (M1/M2/M3)
+curl -L https://github.com/yourusername/condash/releases/latest/download/condash-macos-aarch64 -o condash
+chmod +x condash
+sudo mv condash /usr/local/bin/condash
 ```
 
 ### Build from source
