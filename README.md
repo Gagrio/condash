@@ -49,17 +49,17 @@ Pre-built binaries are available for Linux and macOS:
 
 ```bash
 # Linux ARM64 (aarch64) - like openSUSE Leap 16 on ARM
-wget https://github.com/yourusername/condash/releases/latest/download/condash-linux-aarch64
+wget https://github.com/Gagrio/condash/releases/latest/download/condash-linux-aarch64
 chmod +x condash-linux-aarch64
 sudo mv condash-linux-aarch64 /usr/local/bin/condash
 
 # Linux x86_64
-wget https://github.com/yourusername/condash/releases/latest/download/condash-linux-x86_64
+wget https://github.com/Gagrio/condash/releases/latest/download/condash-linux-x86_64
 chmod +x condash-linux-x86_64
 sudo mv condash-linux-x86_64 /usr/local/bin/condash
 
 # macOS Apple Silicon (M1/M2/M3)
-curl -L https://github.com/yourusername/condash/releases/latest/download/condash-macos-aarch64 -o condash
+curl -L https://github.com/Gagrio/condash/releases/latest/download/condash-macos-aarch64 -o condash
 chmod +x condash
 sudo mv condash /usr/local/bin/condash
 ```
