@@ -51,7 +51,7 @@ jobs:
     name: Build - ${{ matrix.platform }}
     needs: check-version
     if: needs.check-version.outputs.should_release == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false  # Don't cancel other builds if one fails
       matrix:
@@ -64,10 +64,6 @@ jobs:
             target: aarch64-unknown-linux-gnu
             runner: ubuntu-latest
             output: condash-linux-aarch64
-          - platform: macOS Intel
-            target: x86_64-apple-darwin
-            runner: macos-13
-            output: condash-macos-x86_64
           - platform: macOS Apple Silicon
             target: aarch64-apple-darwin
             runner: macos-latest
