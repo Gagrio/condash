@@ -40,7 +40,7 @@ Press Ctrl+C to stop monitoring and clean up.
 ### Homebrew (macOS - Recommended)
 
 ```bash
-brew install yourusername/condash/condash
+brew install Gagrio/condash/condash
 ```
 
 ### Download pre-built binary
