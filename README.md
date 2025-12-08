@@ -42,6 +42,13 @@ Press Ctrl+C to stop monitoring and clean up.
 ```bash
 brew install Gagrio/condash/condash
 ```
+### Linux (x86_64 and aarch64) rpms available via custom repository:
+
+```bash
+sudo zypper addrepo https://download.opensuse.org/repositories/home:/geoagriogiannis/openSUSE_Tumbleweed/home:geoagriogiannis.repo
+sudo zypper refresh
+sudo zypper install condash
+```
 
 ### Download pre-built binary
 
