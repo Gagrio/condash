@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/condash-logo-dark.png">
+    <img src="assets/condash-logo-light.png" alt="condash" width="320">
+  </picture>
+</p>
+
 # condash 🐳📊
 
 **Single-command ephemeral monitoring for Docker containers**
